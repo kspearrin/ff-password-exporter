@@ -1,0 +1,102 @@
+{
+    "name": "ff-password-exporter",
+    "productName": "FF Password Exporter",
+    "description": "Easily export your saved passwords from Firefox.",
+    "version": "0.0.0",
+    "keywords": [
+        "firefox",
+        "mozilla",
+        "passwords",
+        "export"
+    ],
+    "author": "Kyle Spearrin",
+    "homepage": "https://kylespearrin.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kspearrin/ff-password-exporter"
+    },
+    "license": "GPL-3.0",
+    "scripts": {
+        "electron": "electron --inspect=5858 ./src --watch",
+        "clean:dist": "rimraf ./dist/*",
+        "dist:lin": "npm run clean:dist && build --linux --x64 -p never",
+        "dist:mac": "npm run clean:dist && build --mac -p never",
+        "dist:win": "npm run clean:dist && build --win --x64 --ia32 -p never -c.win.certificateSubjectName=\"8bit Solutions LLC\"",
+        "dist:win:ci": "npm run clean:dist && build --win --x64 --ia32 -p never",
+        "publish:lin": "npm run clean:dist && build --linux --x64 -p always",
+        "publish:mac": "npm run clean:dist && build --mac -p always",
+        "publish:win": "npm run clean:dist && build --win --x64 --ia32 -p always -c.win.certificateSubjectName=\"8bit Solutions LLC\""
+    },
+    "build": {
+        "appId": "com.kylespearrin.ff-password-exporter",
+        "copyright": "Copyright © 2015-2018 Kyle Spearrin",
+        "directories": {
+            "buildResources": "resources",
+            "output": "dist",
+            "app": "src"
+        },
+        "mac": {
+            "category": "public.app-category.productivity",
+            "target": [
+                "dmg",
+                "zip"
+            ]
+        },
+        "win": {
+            "target": [
+                "portable",
+                "nsis"
+            ]
+        },
+        "linux": {
+            "category": "Utility",
+            "synopsis": "Easily export your saved passwords from Firefox.",
+            "target": [
+                "AppImage"
+            ]
+        },
+        "dmg": {
+            "artifactName": "FF-Password-Exporter-${version}.${ext}",
+            "icon": "dmg.icns",
+            "contents": [
+                {
+                    "x": 150,
+                    "y": 185,
+                    "type": "file"
+                },
+                {
+                    "x": 390,
+                    "y": 180,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ],
+            "window": {
+                "width": 540,
+                "height": 380
+            }
+        },
+        "nsis": {
+            "oneClick": true,
+            "artifactName": "FF-Password-Exporter-Installer-${version}.${ext}",
+            "uninstallDisplayName": "${productName}",
+            "deleteAppDataOnUninstall": true
+        },
+        "portable": {
+            "artifactName": "FF-Password-Exporter-Portable-${version}.${ext}"
+        },
+        "appImage": {
+            "artifactName": "FF-Password-Exporter-${version}-${arch}.${ext}"
+        }
+    },
+    "devDependencies": {
+        "electron": "^2.0.0",
+        "electron-builder": "^20.8.1",
+        "electron-reload": "^1.2.2",
+        "eslint": "^4.19.1",
+        "node-forge": "^0.7.5",
+        "papaparse": "^4.4.0",
+        "rimraf": "^2.6.2",
+        "sql.js": "^0.5.0"
+    }
+}

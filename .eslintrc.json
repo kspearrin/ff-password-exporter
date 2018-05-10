@@ -1,0 +1,18 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 8
+    },
+    "env": {
+        "browser": true,
+        "node": true,
+        "jasmine": true
+    },
+    "globals": {
+        "Uint8Array": true
+    },
+    "rules": {
+        "prefer-arrow-callback": "warn",
+        "no-console": "warn"
+    }
+}

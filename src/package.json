@@ -1,0 +1,20 @@
+{
+    "name": "ff-password-exporter",
+    "productName": "FF Password Exporter",
+    "description": "Easily export your saved passwords from Firefox.",
+    "version": "1.0.0",
+    "keywords": [
+        "firefox",
+        "mozilla",
+        "passwords",
+        "export"
+    ],
+    "author": "Kyle Spearrin",
+    "homepage": "https://kylespearrin.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kspearrin/ff-password-exporter"
+    },
+    "license": "GPL-3.0",
+    "main": "main.js"
+}

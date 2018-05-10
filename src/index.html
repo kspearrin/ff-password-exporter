@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>FF Password Exporter</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            width: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 10px;
+            width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            background-color: #f4f4f4;
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .row {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            display: block;
+            padding: 5px;
+        }
+
+        button {
+            padding: 8px;
+            width: 100%;
+        }
+
+        #directory-picker {
+            display: none;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .break-words {
+            word-break: break-all;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <p>
+            <label for="profiles">Detected Firefox User Profiles</label>
+            <select id="profiles">
+                <option value="">-- Select Directory --</option>
+            </select>
+            or
+            <a href="#" id="choose-profile">choose a custom profile directory</a>
+        </p>
+        <p class="break-words">
+            <b>Selected Profile:</b>
+            <span id="profile-path"></span>
+        </p>
+        <input type="file" id="directory-picker" webkitdirectory directory>
+    </div>
+    <div class="row">
+        <label for="master-password">Firefox Master Password (if you set one)</label>
+        <input type="password" id="master-password">
+    </div>
+    <div class="row">
+        <label for="file-format">Export File Format</label>
+        <select id="file-format">
+            <option value="csv">CSV</option>
+            <option value="json">JSON</option>
+        </select>
+    </div>
+    <div class="row">
+        <button id="export" type="button">Export Passwords</button>
+    </div>
+    <dov class="row center">
+        <p>Looking for a better way to manage passwords?</p>
+        Try
+        <a href="#" id="bitwarden">Bitwarden</a>, a free password manager that's available on all of your devices.
+    </dov>
+    <script>
+        require('./renderer.js');
+    </script>
+</body>
+
+</html>
