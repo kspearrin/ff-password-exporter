@@ -16,5 +16,10 @@
         "url": "https://github.com/kspearrin/ff-password-exporter"
     },
     "license": "GPL-3.0",
-    "main": "main.js"
+    "main": "main.js",
+    "dependencies": {
+        "node-forge": "^0.7.5",
+        "papaparse": "^4.4.0",
+        "sql.js": "^0.5.0"
+    }
 }
