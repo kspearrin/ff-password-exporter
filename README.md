@@ -2,6 +2,8 @@
 
 It can be difficult to export your passwords from Firefox, especially since version 57 where existing addon solutions no longer work. FF Password Exporter makes it easy to export your passwords from Firefox. You can use FF Password Exporter on Windows, macOS, and Linux distributions.
 
+![FF Password Exporter](http://imgur.com/ExWd9R0.png "FF Password Exporter")
+
 ## Download
 
 - Windows 7, 8, 10 and later
@@ -19,9 +21,12 @@ It can be difficult to export your passwords from Firefox, especially since vers
 5. Click the export button and save the file to your device.
 
 ## Supported Firefox Versions
+
 - Firefox 58+ with `key4.db` profiles
 
 ## Contributing
+
+FF Password Exporter is written in Electron with JavaScript. Contributions are welcome!
 
 **Requirements**
 
