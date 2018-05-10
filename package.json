@@ -18,7 +18,7 @@
     "license": "GPL-3.0",
     "scripts": {
         "electron": "electron --inspect=5858 ./src --watch",
-        "clean:dist": "rimraf ./dist/*",
+        "clean:dist": "rimraf ./dist",
         "dist:lin": "npm run clean:dist && build --linux --x64 -p never",
         "dist:mac": "npm run clean:dist && build --mac -p never",
         "dist:win": "npm run clean:dist && build --win --x64 --ia32 -p never -c.win.certificateSubjectName=\"8bit Solutions LLC\"",
