@@ -26,7 +26,11 @@ app.setPath('logs', path.join(app.getPath('userData'), 'logs'));
 let mainWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({ width: 400, height: 550 });
+    mainWindow = new BrowserWindow({
+        width: 400,
+        height: 550,
+        icon: process.platform === 'linux' ? path.join(__dirname, '/images/icon.png') : undefined,
+    });
 
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
