@@ -90,7 +90,10 @@ const Papa = require('papaparse');
                 continue;
             }
             const directories = fs.readdirSync(p).map(name => path.join(p, name))
-                .filter((s) => fs.lstatSync(s).isDirectory());
+                .filter((s) => {
+                    return fs.lstatSync(s).isDirectory() && s.indexOf('Crash Reports') === -1 &&
+                        s.indexOf('Pending Pings') === -1;
+                });
             if (directories.length) {
                 profiles = profiles.concat(directories);
             }
