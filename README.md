@@ -9,8 +9,11 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
 - Windows 7, 8, 10 and later
   - [Portable (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-Portable-1.0.0.exe)
   - [Installer (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-Installer-1.0.0.exe)
-- [macOS (.zip)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/ff-password-exporter-1.0.0-mac.zip)
-- [Linux (.AppImage, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-1.0.0-x86_64.AppImage)
+- macOS (OS X) Mavericks and later 
+  - [App (.app, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/ff-password-exporter-1.0.0-mac.zip)
+  - [Installer (.dmg, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-1.0.0.dmg)
+- Linux Distributions
+  - [.AppImage (x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-1.0.0-x86_64.AppImage)
 
 ## How to Use
 
@@ -26,7 +29,7 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
 
 ## Contributing
 
-FF Password Exporter is written in Electron with JavaScript. Contributions are welcome via pull request!
+FF Password Exporter is written in Electron with JavaScript. Contributions/pull requests are welcome!
 
 **Requirements**
 
