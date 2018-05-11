@@ -4,7 +4,7 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
 
 ![FF Password Exporter](http://imgur.com/PdMWPvE.png "FF Password Exporter")
 
-## Download
+## Download/Install
 
 - Windows 7, 8, 10 and later
   - [Portable (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.0.0/FF-Password-Exporter-Portable-1.0.0.exe)
