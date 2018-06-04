@@ -2,7 +2,7 @@
     "name": "ff-password-exporter",
     "productName": "FF Password Exporter",
     "description": "Easily export your saved passwords from Firefox.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "firefox",
         "mozilla",
