@@ -184,7 +184,7 @@ const Papa = require('papaparse');
             const item2Data = item2Asn1.value[1].value;
             const item2Value = decryptKey(globalSalt, masterPasswordBytes, item2Salt, item2Data);
             if (item2Value && item2Value.data === 'password-check') {
-                const nssData = key4Db.exec('SELECT a11 FROM nssPrivate;');
+                const nssData = key4Db.exec('SELECT a11 FROM nssPrivate WHERE a11 IS NOT NULL;');
                 if (nssData && nssData.length && nssData[0].values && nssData[0].values.length) {
                     const a11 = toByteString(nssData[0].values[0][0].buffer);
                     const a11Asn1 = forge.asn1.fromDer(a11);
