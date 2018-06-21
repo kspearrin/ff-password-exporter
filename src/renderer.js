@@ -151,7 +151,11 @@ const Papa = require('papaparse');
             logins.push({
                 hostname: login.hostname,
                 username: username.data,
-                password: password.data
+                password: password.data,
+                created: login.timeCreated,
+                last_used: login.timeLastUsed,
+                last_changed: login.timePasswordChanged,
+                usage: login.timesUsed
             });
         }
 
