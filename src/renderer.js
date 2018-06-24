@@ -148,21 +148,15 @@ const Papa = require('papaparse');
             const decodedPassword = decodeLoginData(login.encryptedPassword);
             const username = decrypt(decodedUsername.data, decodedUsername.iv, key);
             const password = decrypt(decodedPassword.data, decodedPassword.iv, key);
-
-            // add timestamp infos
-            const timeCreated = login.timeCreated;
-            const timeLastUsed = login.timeLastUsed;
-            const timePasswordChanged = login.timePasswordChanged;
-            const timesUsed = login.timesUsed;
-
+            
             logins.push({
                 hostname: login.hostname,
                 username: username.data,
                 password: password.data,
-                timeCreated,
-                timeLastUsed,
-                timePasswordChanged,
-                timesUsed
+                timeCreated: login.timeCreated,
+                timeLastUsed: login.timeLastUsed,
+                timePasswordChanged: login.timePasswordChanged,
+                timesUsed: login.timesUsed,
             });
         }
 
