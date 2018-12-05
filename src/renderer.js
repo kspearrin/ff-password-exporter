@@ -55,9 +55,16 @@ const Papa = require('papaparse');
         }
         try {
             const logins = await getLogins(profileDirectory, document.querySelector('#master-password').value);
-            const fileType = document.querySelector('#file-format').value;
-            const blobData = fileType === 'json' ? JSON.stringify(logins) : Papa.unparse(logins);
-            saveFile(blobData, fileType);
+            electron.remote.dialog.showSaveDialog({
+                defaultPath: makeFileName(),
+                filters: [
+                    { name: "CSV", extensions: ["csv"] },
+                    { name: "JSON", extensions: ["json"] }
+                ]
+            }, (filename) => {
+                const data = path.extname(filename) === ".json" ? JSON.stringify(logins) : Papa.unparse(logins);
+                fs.writeFile(filename, data, "utf-8", (e) => { if ( e ) showAlert('error', e); });
+            });
         } catch (e) {
             showAlert('error', e);
         }
@@ -102,24 +109,14 @@ const Papa = require('papaparse');
         return profiles;
     }
 
-    function saveFile(data, ext) {
-        const blob = new Blob([data], { type: 'text/plain' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = makeFileName(ext);
-        window.document.body.appendChild(a);
-        a.click();
-        window.document.body.removeChild(a);
-    }
-
-    function makeFileName(ext) {
+    function makeFileName() {
         const now = new Date();
         const dateString =
             now.getFullYear() + '' + padNumber(now.getMonth() + 1, 2) + '' + padNumber(now.getDate(), 2) +
             padNumber(now.getHours(), 2) + '' + padNumber(now.getMinutes(), 2) +
             padNumber(now.getSeconds(), 2);
 
-        return 'firefox_logins_' + dateString + '.' + ext;
+        return 'firefox_logins_' + dateString;
     }
 
     function padNumber(num, width, padCharacter) {
