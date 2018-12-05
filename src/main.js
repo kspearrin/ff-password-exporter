@@ -28,7 +28,7 @@ let mainWindow;
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 400,
-        height: 550,
+        height: 450,
         icon: process.platform === 'linux' ? path.join(__dirname, '/images/icon.png') : undefined,
     });
 

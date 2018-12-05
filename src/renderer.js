@@ -58,12 +58,16 @@ const Papa = require('papaparse');
             electron.remote.dialog.showSaveDialog({
                 defaultPath: makeFileName(),
                 filters: [
-                    { name: "CSV", extensions: ["csv"] },
-                    { name: "JSON", extensions: ["json"] }
+                    { name: 'CSV', extensions: ['csv'] },
+                    { name: 'JSON', extensions: ['json'] }
                 ]
             }, (filename) => {
-                const data = path.extname(filename) === ".json" ? JSON.stringify(logins) : Papa.unparse(logins);
-                fs.writeFile(filename, data, "utf-8", (e) => { if ( e ) showAlert('error', e); });
+                const data = path.extname(filename) === '.json' ? JSON.stringify(logins) : Papa.unparse(logins);
+                fs.writeFile(filename, data, 'utf-8', (e) => {
+                    if (e) {
+                        showAlert('error', e);
+                    }
+                });
             });
         } catch (e) {
             showAlert('error', e);
@@ -145,7 +149,7 @@ const Papa = require('papaparse');
             const decodedPassword = decodeLoginData(login.encryptedPassword);
             const username = decrypt(decodedUsername.data, decodedUsername.iv, key);
             const password = decrypt(decodedPassword.data, decodedPassword.iv, key);
-            
+
             logins.push({
                 hostname: login.hostname,
                 username: username.data,
