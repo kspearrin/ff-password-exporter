@@ -20,8 +20,8 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
 1. Download and install/run FF Password Exporter. Use the links above.
 2. Choose the Firefox user's profile directory you want to export passwords from.
 3. If you have set a master password to protect your Firefox passwords, enter it.
-4. Choose your export format: CSV or JSON.
-5. Click the export button and save the file to your device.
+4. Click the export button.
+5. Choose your file format (CSV or JSON), and save the file to your device.
 
 ## Supported Firefox Versions
 
