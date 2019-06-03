@@ -13,7 +13,7 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
   - [Portable (.app, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/ff-password-exporter-1.1.1-mac.zip)
   - [Installer (.dmg, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-1.1.1.dmg)
 - Linux
-  - [Portable (.AppImage, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-1.1.1-x86_64.AppImage)
+  - [Portable (.AppImage, x64) (make it executable to install and run)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-1.1.1-x86_64.AppImage)
 
 ## How to Use
 
