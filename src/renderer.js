@@ -4,6 +4,7 @@ const path = require('path');
 const SQL = require('sql.js');
 const forge = require('node-forge');
 const Papa = require('papaparse');
+const iconv = require('iconv-lite');
 
 (() => {
     const paths = getDefaultProfileDirectories();
@@ -54,7 +55,7 @@ const Papa = require('papaparse');
             return;
         }
         try {
-            const logins = await getLogins(profileDirectory, document.querySelector('#master-password').value);
+            const logins = getLogins(profileDirectory, document.querySelector('#master-password').value);
             electron.remote.dialog.showSaveDialog({
                 defaultPath: makeFileName(),
                 filters: [
@@ -130,8 +131,8 @@ const Papa = require('papaparse');
             new Array(width - numString.length + 1).join(padCharacter) + numString;
     }
 
-    async function getLogins(profileDirectory, masterPassword) {
-        const key = await getKey(profileDirectory, masterPassword);
+    function getLogins(profileDirectory, masterPassword) {
+        const key = getKey(profileDirectory, masterPassword);
         if (key == null) {
             throw new Error('No key found.');
         }
@@ -149,6 +150,16 @@ const Papa = require('papaparse');
             const decodedPassword = decodeLoginData(login.encryptedPassword);
             const username = decrypt(decodedUsername.data, decodedUsername.iv, key);
             const password = decrypt(decodedPassword.data, decodedPassword.iv, key);
+
+            let encodeUsername = iconv.encode(username.data, 'latin1').toString();
+            if(encodeUsername != username.data){
+                username.data = encodeUsername;
+            }
+
+            let encodePassword = iconv.encode(password.data, 'latin1').toString();
+            if(encodePassword != password.data){
+                password.data = encodePassword;
+            }
 
             logins.push({
                 hostname: login.hostname,
@@ -172,7 +183,7 @@ const Papa = require('papaparse');
         };
     }
 
-    async function getKey(profileDirectory, masterPassword) {
+    function getKey(profileDirectory, masterPassword) {
         const key4FilePath = path.join(profileDirectory, 'key4.db');
         if (!fs.existsSync(key4FilePath)) {
             throw new Error('key4.db was not found in this profile directory.');
