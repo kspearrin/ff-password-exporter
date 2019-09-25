@@ -151,10 +151,14 @@ const iconv = require('iconv-lite');
             const username = decrypt(decodedUsername.data, decodedUsername.iv, key);
             const password = decrypt(decodedPassword.data, decodedPassword.iv, key);
 
-            let encodePass = iconv.encode(password.data, 'ISO-8859-1').toString();
-            if(encodePass != password.data){
-                password.data = encodePass;
-                console.log('set converted password', login.hostname, username.data, password.data);
+            let encodeUsername = iconv.encode(username.data, 'latin1').toString();
+            if(encodeUsername != username.data){
+                username.data = encodeUsername;
+            }
+
+            let encodePassword = iconv.encode(password.data, 'latin1').toString();
+            if(encodePassword != password.data){
+                password.data = encodePassword;
             }
 
             logins.push({
