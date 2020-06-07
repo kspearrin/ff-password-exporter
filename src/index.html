@@ -8,6 +8,8 @@
     <style>
         * {
             box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            letter-spacing: 0.2px;
         }
 
         html {
@@ -20,7 +22,7 @@
             width: 100%;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
-            background-color: #f4f4f4;
+            background-color: #fbfbfb;
             color: black;
         }
 
@@ -44,20 +46,48 @@
         input,
         select,
         textarea {
+            transition: 0.3s;
             width: 100%;
             display: block;
             padding: 5px;
             font-size: 14px;
             background-color: #ffffff;
             color: black;
+            border-radius: 5px;
+            border: 1px solid #00c83c;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus,
+        button:focus {
+            border: 1px solid #00c83c !important;
+            outline:none;
+            box-shadow: 0 0 0.2rem #cacaca;
+            transition-timing-function: cubic-bezier(0.23, 1, 0.320, 1);
+            transition: 0.3s;
         }
 
         button {
+            transition:0.4s;
+            transition-timing-function:cubic-bezier(0.23, 1, 0.320, 1);
             padding: 8px;
             width: 100%;
             font-size: 14px;
             font-weight: bold;
-            color: black;
+            color: white;
+            border-radius: 5px;
+            border:none;
+            background-color:#00c811;
+            box-shadow: 0 0 0.2rem #cacaca;
+            cursor:pointer;
+        }
+
+        button:hover{
+            transition: 0.3s;
+            transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+            background-color:#00dd55;
+            box-shadow: 0 0 0.5rem #b1b1b1;
         }
 
         #directory-picker {
@@ -86,6 +116,7 @@
         </p>
         <p class="break-words">
             <b>Selected Profile:</b>
+            <br>
             <span id="profile-path"></span>
         </p>
         <input type="file" id="directory-picker" webkitdirectory directory>
