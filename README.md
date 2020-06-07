@@ -7,13 +7,13 @@ It can be difficult to export your passwords from Firefox. Since version 57 of F
 ## Download/Install
 
 - Windows 7, 8, 10 and later
-  - [Portable (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-Portable-1.1.1.exe)
-  - [Installer (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-Installer-1.1.1.exe)
+  - [Portable (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.2.0/FF-Password-Exporter-Portable-1.2.0.exe)
+  - [Installer (.exe, x86 and x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.2.0/FF-Password-Exporter-Installer-1.2.0.exe)
 - macOS (OS X) Mavericks and later 
-  - [Portable (.app, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/ff-password-exporter-1.1.1-mac.zip)
-  - [Installer (.dmg, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-1.1.1.dmg)
+  - [Portable (.app, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.2.0/ff-password-exporter-1.2.0-mac.zip)
+  - [Installer (.dmg, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.2.0/FF-Password-Exporter-1.2.0.dmg)
 - Linux
-  - [Portable (.AppImage, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.1.1/FF-Password-Exporter-1.1.1-x86_64.AppImage)
+  - [Portable (.AppImage, x64)](https://github.com/kspearrin/ff-password-exporter/releases/download/v1.2.0/FF-Password-Exporter-1.2.0-x86_64.AppImage)
 
 ## How to Use
 
