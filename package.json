@@ -19,13 +19,13 @@
     "scripts": {
         "electron": "electron --inspect=5858 ./src --watch",
         "clean:dist": "rimraf ./dist",
-        "dist:lin": "npm run clean:dist && build --linux --x64 -p never",
-        "dist:mac": "npm run clean:dist && build --mac -p never",
-        "dist:win": "npm run clean:dist && build --win --x64 --ia32 -p never -c.win.certificateSubjectName=\"8bit Solutions LLC\"",
-        "dist:win:ci": "npm run clean:dist && build --win --x64 --ia32 -p never",
-        "publish:lin": "npm run clean:dist && build --linux --x64 -p always",
-        "publish:mac": "npm run clean:dist && build --mac -p always",
-        "publish:win": "npm run clean:dist && build --win --x64 --ia32 -p always -c.win.certificateSubjectName=\"8bit Solutions LLC\""
+        "dist:lin": "npm run clean:dist && electron-builder --linux --x64 -p never",
+        "dist:mac": "npm run clean:dist && electron-builder --mac -p never",
+        "dist:win": "npm run clean:dist && electron-builder --win --x64 --ia32 -p never -c.win.certificateSubjectName=\"8bit Solutions LLC\"",
+        "dist:win:ci": "npm run clean:dist && electron-builder --win --x64 --ia32 -p never",
+        "publish:lin": "npm run clean:dist && electron-builder --linux --x64 -p always",
+        "publish:mac": "npm run clean:dist && electron-builder --mac -p always",
+        "publish:win": "npm run clean:dist && electron-builder --win --x64 --ia32 -p always -c.win.certificateSubjectName=\"8bit Solutions LLC\""
     },
     "build": {
         "appId": "com.kylespearrin.ff-password-exporter",
@@ -90,7 +90,7 @@
     },
     "devDependencies": {
         "electron": "^3.0.6",
-        "electron-builder": "^20.29.0",
+        "electron-builder": "22.4.0",
         "electron-reload": "^1.5.0",
         "eslint": "^5.8.0",
         "node-forge": "^0.7.6",
