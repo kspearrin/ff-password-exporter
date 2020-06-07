@@ -197,13 +197,13 @@ const iconv = require('iconv-lite');
             const globalSalt = toByteString(metaData[0].values[0][0].buffer);
             const item2 = toByteString(metaData[0].values[0][1].buffer);
             const item2Asn1 = forge.asn1.fromDer(item2);
-            const item2Value = decryptPbe(item2Asn1.value, masterPasswordBytes, globalSalt);
+            const item2Value = pbesDecrypt(item2Asn1.value, masterPasswordBytes, globalSalt);
             if (item2Value && item2Value.data === 'password-check') {
                 const nssData = key4Db.exec('SELECT a11 FROM nssPrivate WHERE a11 IS NOT NULL;');
                 if (nssData && nssData.length && nssData[0].values && nssData[0].values.length) {
                     const a11 = toByteString(nssData[0].values[0][0].buffer);
                     const a11Asn1 = forge.asn1.fromDer(a11);
-                    return decryptPbe(a11Asn1.value, masterPasswordBytes, globalSalt);
+                    return pbesDecrypt(a11Asn1.value, masterPasswordBytes, globalSalt);
                 }
             } else {
                 // TODO: Support key3.db?
@@ -214,13 +214,74 @@ const iconv = require('iconv-lite');
         throw new Error('Not able to get key from profile directory.');
     }
 
+    function pbesDecrypt(decodedItemSeq, password, globalSalt) {
+        // forge.asn1.fromDer() doesn't seem to decode OBJECTIDENTIFIER values properly,
+        // so we determine if we're using PBES or PBES2 by structure.
+        if (!!decodedItemSeq[0].value[1].value[0].value[1].value) {
+            return pbes2Decrypt(decodedItemSeq, password, globalSalt);
+        }
+        return pbes1Decrypt(decodedItemSeq, password, globalSalt);
+    }
+
+    function pbes1Decrypt(decodedItemSeq, password, globalSalt) {
+        const data = decodedItemSeq[1].value;
+        const salt = decodedItemSeq[0].value[1].value[0].value;
+        const hp = sha1(globalSalt + password);
+        const pes = toByteString(pad(toArray(salt), 20).buffer);
+        const chp = sha1(hp + salt);
+        const k1 = hmac(pes + salt, chp);
+        const tk = hmac(pes, chp);
+        const k2 = hmac(tk + salt, chp);
+        const k = k1 + k2;
+        const kBuffer = forge.util.createBuffer(k);
+        const otherLength = kBuffer.length() - 32;
+        const key = kBuffer.getBytes(24);
+        kBuffer.getBytes(otherLength);
+        const iv = kBuffer.getBytes(8);
+        return decrypt(data, iv, key, '3DES-CBC');
+    }
+
+    function pad(arr, length) {
+        if (arr.length >= length) {
+            return arr;
+        }
+        const padAmount = length - arr.length;
+        const padArr = [];
+        for (let i = 0; i < padAmount; i++) {
+            padArr.push(0);
+        }
+
+        var newArr = new Uint8Array(padArr.length + arr.length);
+        newArr.set(padArr, 0);
+        newArr.set(arr, padArr.length);
+        return newArr;
+    }
+
+    function hmac(data, key) {
+        const hmac = forge.hmac.create();
+        hmac.start('sha1', key);
+        hmac.update(data, 'raw');
+        return hmac.digest().data;
+    }
+
+    function toByteString(buffer) {
+        return String.fromCharCode.apply(null, new Uint8Array(buffer));
+    }
+
+    function toArray(str) {
+        const arr = new Uint8Array(str.length);
+        for (let i = 0; i < str.length; i++) {
+            arr[i] = str.charCodeAt(i);
+        }
+        return arr;
+    }
+
     // Adapted from https://github.com/lclevy/firepwd/blob/master/firepwd.py
-    function decryptPbe(decodedItemSeq, password, globalSalt) {
+    function pbes2Decrypt(decodedItemSeq, password, globalSalt) {
         const data = decodedItemSeq[1].value;
         const pbkdf2Seq = decodedItemSeq[0].value[1].value[0].value[1].value;
         const salt = pbkdf2Seq[0].value;
         const iterations = pbkdf2Seq[1].value.charCodeAt();
-        const keyLength = pbkdf2Seq[2].value;
         // Prepending 0x040e, where 0x04 = octetstring, 0x0e = string length (14)
         const iv = '' + decodedItemSeq[0].value[1].value[1].value[1].value;
         const k = sha1(globalSalt + password);
