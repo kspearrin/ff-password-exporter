@@ -211,13 +211,13 @@ const iconv = require('iconv-lite');
             }
         }
 
-        throw new Error('Not able to get key from profile directory.');
+        throw new Error('Not able to get key from profile directory or no passwords were found.');
     }
 
     function pbesDecrypt(decodedItemSeq, password, globalSalt) {
         // forge.asn1.fromDer() doesn't seem to decode OBJECTIDENTIFIER values properly,
         // so we determine if we're using PBES or PBES2 by structure.
-        if (!!decodedItemSeq[0].value[1].value[0].value[1].value) {
+        if (decodedItemSeq[0].value[1].value[0].value[1].value != null) {
             return pbes2Decrypt(decodedItemSeq, password, globalSalt);
         }
         return pbes1Decrypt(decodedItemSeq, password, globalSalt);
@@ -239,6 +239,33 @@ const iconv = require('iconv-lite');
         kBuffer.getBytes(otherLength);
         const iv = kBuffer.getBytes(8);
         return decrypt(data, iv, key, '3DES-CBC');
+    }
+
+    // Adapted from https://github.com/lclevy/firepwd/blob/master/firepwd.py
+    function pbes2Decrypt(decodedItemSeq, password, globalSalt) {
+        const data = decodedItemSeq[1].value;
+        const pbkdf2Seq = decodedItemSeq[0].value[1].value[0].value[1].value;
+        const salt = pbkdf2Seq[0].value;
+        const iterations = pbkdf2Seq[1].value.charCodeAt();
+        // Prepending 0x040e, where 0x04 = octetstring, 0x0e = string length (14)
+        const iv = '' + decodedItemSeq[0].value[1].value[1].value[1].value;
+        const k = sha1(globalSalt + password);
+        const key = forge.pkcs5.pbkdf2(k, salt, iterations, 32, forge.md.sha256.create());
+        return decrypt(data, iv, key, 'AES-CBC');
+    }
+
+    function decrypt(data, iv, key, algorithm) {
+        const decipher = forge.cipher.createDecipher(algorithm, key);
+        decipher.start({ iv: iv });
+        decipher.update(forge.util.createBuffer(data));
+        decipher.finish();
+        return decipher.output;
+    }
+
+    function sha1(data) {
+        const md = forge.md.sha1.create();
+        md.update(data, 'raw');
+        return md.digest().data;
     }
 
     function pad(arr, length) {
@@ -274,36 +301,5 @@ const iconv = require('iconv-lite');
             arr[i] = str.charCodeAt(i);
         }
         return arr;
-    }
-
-    // Adapted from https://github.com/lclevy/firepwd/blob/master/firepwd.py
-    function pbes2Decrypt(decodedItemSeq, password, globalSalt) {
-        const data = decodedItemSeq[1].value;
-        const pbkdf2Seq = decodedItemSeq[0].value[1].value[0].value[1].value;
-        const salt = pbkdf2Seq[0].value;
-        const iterations = pbkdf2Seq[1].value.charCodeAt();
-        // Prepending 0x040e, where 0x04 = octetstring, 0x0e = string length (14)
-        const iv = '' + decodedItemSeq[0].value[1].value[1].value[1].value;
-        const k = sha1(globalSalt + password);
-        const key = forge.pkcs5.pbkdf2(k, salt, iterations, 32, forge.md.sha256.create());
-        return decrypt(data, iv, key, 'AES-CBC');
-    }
-
-    function decrypt(data, iv, key, algorithm) {
-        const decipher = forge.cipher.createDecipher(algorithm, key);
-        decipher.start({ iv: iv });
-        decipher.update(forge.util.createBuffer(data));
-        decipher.finish();
-        return decipher.output;
-    }
-
-    function sha1(data) {
-        const md = forge.md.sha1.create();
-        md.update(data, 'raw');
-        return md.digest().data;
-    }
-
-    function toByteString(buffer) {
-        return String.fromCharCode.apply(null, new Uint8Array(buffer));
     }
 })();
