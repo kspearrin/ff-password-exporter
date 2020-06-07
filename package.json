@@ -29,7 +29,7 @@
     },
     "build": {
         "appId": "com.kylespearrin.ff-password-exporter",
-        "copyright": "Copyright © 2015-2018 Kyle Spearrin",
+        "copyright": "Copyright © 2015-2020 Kyle Spearrin",
         "directories": {
             "buildResources": "resources",
             "output": "dist",
@@ -91,10 +91,10 @@
     "devDependencies": {
         "electron": "^3.0.6",
         "electron-builder": "^20.29.0",
-        "electron-reload": "^1.2.5",
+        "electron-reload": "^1.5.0",
         "eslint": "^5.8.0",
         "node-forge": "^0.7.6",
-        "papaparse": "^4.6.1",
+        "papaparse": "5.2.0",
         "rimraf": "^2.6.2",
         "sql.js": "^0.5.0"
     }
