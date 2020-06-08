@@ -64,7 +64,7 @@ const iconv = require('iconv-lite');
                 ]
             }, (filename) => {
                 const data = path.extname(filename) === '.json' ? JSON.stringify(logins) : Papa.unparse(logins);
-                fs.writeFile(filename, data, 'utf-8', (e) => {
+                fs.writeFile(filename, data, {encoding: 'utf-8', mode: '0600'}, (e) => {
                     if (e) {
                         showAlert('error', e);
                     }
